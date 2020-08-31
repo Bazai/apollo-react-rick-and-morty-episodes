@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 
+import Season from "./Season";
+
 const EPISODES = gql`
   query GetEpisodes {
     episodes(page: 1) {
@@ -124,7 +126,14 @@ const Episodes = () => {
   if (isLoading) {
     return <h1 className="mt-4 font-bold text-3xl text-black">Loading...</h1>;
   } else {
-    return <h1 className="mt-4 font-bold text-3xl text-black">Episodes</h1>;
+    return (
+      <>
+        <h1 className="mt-4 font-bold text-3xl text-black">Episodes</h1>
+        {Object.keys(normalizedEpisodes).map((season) => (
+          <Season number={season} key={season} />
+        ))}
+      </>
+    );
   }
 };
 
