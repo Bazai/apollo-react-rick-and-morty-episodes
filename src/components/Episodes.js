@@ -102,8 +102,8 @@ const Episodes = () => {
         } else {
           normalized[season] = [ep];
         }
-        setNormalizedEpisodes(normalized);
       });
+      setNormalizedEpisodes(normalized);
     }
   }, [episodes, isLoading]);
 
