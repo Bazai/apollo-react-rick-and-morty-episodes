@@ -53,6 +53,7 @@ const EPISODES3 = gql`
 const Episodes = () => {
   // const client = useApolloClient();
   const [episodes, setEpisodes] = useState([]);
+  const [normalizedEpisodes, setNormalizedEpisodes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const { loading, error, data } = useQuery(EPISODES);
@@ -91,13 +92,31 @@ const Episodes = () => {
     }
   }, [data3]);
 
+  // Сборка ризбитого по сезонам объекта
   useEffect(() => {
-    console.log("EEE", episodes);
-  }, [episodes]);
+    if (!isLoading) {
+      let normalized = {};
+      episodes.forEach((ep) => {
+        const reg = /S(\d\d)E(\d\d)/;
+        const season = ep?.episode.match(reg)?.[1];
+
+        if (normalized.hasOwnProperty(season)) {
+          normalized[season].push(ep);
+        } else {
+          normalized[season] = [ep];
+        }
+        setNormalizedEpisodes(normalized);
+      });
+    }
+  }, [episodes, isLoading]);
 
   useEffect(() => {
     console.log("II", isLoading);
   }, [isLoading]);
+
+  useEffect(() => {
+    console.log("NNN", normalizedEpisodes);
+  }, [normalizedEpisodes]);
 
   // if (error) {
   //   return <h1 className="mt-4 font-bold text-3xl text-red-900">Error</h1>;
