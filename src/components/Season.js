@@ -3,7 +3,7 @@ import { useKeenSlider } from "keen-slider/react";
 import Episode from "./Episode";
 
 const Season = ({ number, episodes }) => {
-  const [sliderRef, slider] = useKeenSlider({ slidesPerView: 3, spacing: 15 });
+  const [sliderRef] = useKeenSlider({ slidesPerView: 3, spacing: 15 });
 
   return (
     <div className="mx-8 mt-8">
