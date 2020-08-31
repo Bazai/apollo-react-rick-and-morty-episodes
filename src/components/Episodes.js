@@ -122,7 +122,6 @@ const Episodes = () => {
   } else {
     return (
       <>
-        <h1 className="mt-4 font-bold text-3xl text-black">Episodes</h1>
         {Object.keys(normalizedEpisodes).map((season) => (
           <Season
             number={season}
