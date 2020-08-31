@@ -58,20 +58,14 @@ const Episodes = () => {
   const [normalizedEpisodes, setNormalizedEpisodes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { loading, error, data } = useQuery(EPISODES);
-  const { loading: loading2, error: error2, data: data2 } = useQuery(
-    EPISODES2,
-    {
-      skip: !data,
-    }
-  );
+  const { data } = useQuery(EPISODES);
+  const { data: data2 } = useQuery(EPISODES2, {
+    skip: !data,
+  });
 
-  const { loading: loading3, error: error3, data: data3 } = useQuery(
-    EPISODES3,
-    {
-      skip: !data2,
-    }
-  );
+  const { data: data3 } = useQuery(EPISODES3, {
+    skip: !data2,
+  });
 
   useEffect(() => {
     setEpisodes(data?.episodes?.results);
@@ -130,7 +124,11 @@ const Episodes = () => {
       <>
         <h1 className="mt-4 font-bold text-3xl text-black">Episodes</h1>
         {Object.keys(normalizedEpisodes).map((season) => (
-          <Season number={season} key={season} />
+          <Season
+            number={season}
+            key={season}
+            episodes={normalizedEpisodes[season]}
+          />
         ))}
       </>
     );
