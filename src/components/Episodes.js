@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 
+import Loader from "./Loader";
 import Season from "./Season";
 
 const EPISODES = gql`
@@ -53,11 +54,11 @@ const EPISODES3 = gql`
 `;
 
 const Episodes = () => {
-  // const client = useApolloClient();
   const [episodes, setEpisodes] = useState([]);
   const [normalizedEpisodes, setNormalizedEpisodes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Fetching
   const { data } = useQuery(EPISODES);
   const { data: data2 } = useQuery(EPISODES2, {
     skip: !data,
@@ -88,7 +89,7 @@ const Episodes = () => {
     }
   }, [data3]);
 
-  // Сборка ризбитого по сезонам объекта
+  // Normalize paginated data
   useEffect(() => {
     if (!isLoading) {
       let normalized = {};
@@ -106,19 +107,8 @@ const Episodes = () => {
     }
   }, [episodes, isLoading]);
 
-  useEffect(() => {
-    console.log("II", isLoading);
-  }, [isLoading]);
-
-  useEffect(() => {
-    console.log("NNN", normalizedEpisodes);
-  }, [normalizedEpisodes]);
-
-  // if (error) {
-  //   return <h1 className="mt-4 font-bold text-3xl text-red-900">Error</h1>;
-  // } else
   if (isLoading) {
-    return <h1 className="mt-4 font-bold text-3xl text-black">Loading...</h1>;
+    return <Loader />;
   } else {
     return (
       <>

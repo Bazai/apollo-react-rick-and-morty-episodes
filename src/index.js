@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client";
+import * as serviceWorker from "./serviceWorker";
 
 import "./index.css";
 import App from "./App";
-import * as serviceWorker from "./serviceWorker";
+
 const client = new ApolloClient({
   uri: "https://rickandmortyapi.com/graphql/",
   cache: new InMemoryCache(),
